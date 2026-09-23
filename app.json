@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "VKU Room Booking",
+    "slug": "vku-room-booking",
+    "version": "1.0.0",
+    "description": "Ứng dụng đặt phòng học và phòng lab trong khuôn viên VKU.",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "icon": "./assets/app-icon.png",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#173F35"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "vn.edu.vku.roombooking"
+    },
+    "android": {
+      "package": "vn.edu.vku.roombooking",
+      "adaptiveIcon": {
+        "backgroundColor": "#173F35"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "name": "VKU Room Booking",
+      "shortName": "Room Booking",
+      "lang": "vi",
+      "themeColor": "#173F35",
+      "description": "Tìm và đặt phòng học, phòng lab trong khuôn viên VKU.",
+      "favicon": "./assets/app-icon.png"
+    },
+    "experiments": {
+      "baseUrl": "/vku-room-booking"
+    }
+  }
+}

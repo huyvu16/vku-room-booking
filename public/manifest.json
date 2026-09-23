@@ -1,0 +1,27 @@
+{
+  "id": ".",
+  "name": "VKU Room Booking",
+  "short_name": "Room Booking",
+  "description": "Tìm và đặt phòng học, phòng lab trong khuôn viên VKU.",
+  "lang": "vi",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#173F35",
+  "background_color": "#F7F5EF",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
