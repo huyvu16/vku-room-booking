@@ -1,8 +1,1 @@
-node_modules/
-.expo/
-dist/
-web-build/
-.DS_Store
-*.log
-.tools/
-tmp/
+# Generated web artifact: keep Expo runtime assets, including icon fonts.
