@@ -5,17 +5,18 @@
 **Team / Student Name:** huyvu16 (Individual Project)  
 **Submission Date:** 23/09/2026
 
-> **Thông tin cần bổ sung trước khi nộp:** Họ và tên sinh viên, mã số sinh viên và video demo (nếu có).
+> **Thông tin cần bổ sung trước khi nộp:** Video demo 2–3 phút, quay trực tiếp trên điện thoại thật.
 
 ---
 
 ## 1. GENERAL INFORMATION & DELIVERABLE LINKS
 
 * **Team Members:**
-  1. **[CẦN BỔ SUNG HỌ VÀ TÊN]** — Student ID: **[CẦN BỔ SUNG MSSV]** — Role: **Individual Developer / UI, Navigation, State Management & Deployment** — Contribution: **100%**
+  1. **[Nguyễn Huy Vũ]** — Student ID: **[23IT317]** — Role: **Individual Developer / UI, Navigation, State Management & Deployment** — Contribution: **100%**
 * **🔗 Live Demo URL:** [https://huyvu16.github.io/vku-room-booking/](https://huyvu16.github.io/vku-room-booking/)
 * **💻 GitHub Repository:** [https://github.com/huyvu16/vku-room-booking](https://github.com/huyvu16/vku-room-booking)
-* **🎥 Video Demo (Optional):** Chưa cung cấp.
+* **📱 Android APK:** [GitHub Releases](https://github.com/huyvu16/vku-room-booking/releases/latest) — file APK được tạo tự động sau khi tag phiên bản được đẩy lên.
+* **🎥 Video Demo (2–3 phút, quay trên điện thoại thật):** Chưa cung cấp; cần ghi hình trực tiếp trên thiết bị.
 
 ### Project Overview
 
@@ -34,6 +35,10 @@ VKU Room Booking là ứng dụng React Native đa nền tảng giúp sinh viên
 | 5 | Client state and simulated server state | ✅ Complete | Zustand quản lý bộ lọc, lịch đặt và hành động hủy/đặt phòng. TanStack Query quản lý dữ liệu phòng mô phỏng, cache 5 phút, retry một lần và hỗ trợ tải lại khi lỗi. |
 | 6 | Booking management flow | ✅ Complete | Có luồng xem chi tiết → chọn lịch → xác nhận → màn hình thành công → danh sách lịch đã đặt. Người dùng có thể hủy một lịch đã xác nhận. |
 | 7 | Responsive, safe-area and PWA support | ✅ Complete | Bố cục 1/2/3 cột theo độ rộng màn hình, hỗ trợ safe area, tablet và xoay màn hình. Bản web có manifest, icon 192/512 px và chế độ standalone để cài lên màn hình chính. |
+| 8 | Persistent booking storage | ✅ Complete | Zustand `persist` lưu riêng danh sách booking qua AsyncStorage trên thiết bị (và local storage trên web); bộ lọc không bị lưu cùng. |
+| 9 | TanStack Query pull-to-refresh | ✅ Complete | FlatList liên kết `isRefetching` và `refetch()` để kéo xuống tải lại dữ liệu phòng. |
+| 10 | Reanimated card entry/layout animation | ✅ Complete | Room card đi vào bằng `FadeInDown` có stagger; thay đổi danh sách dùng layout spring animation. |
+| 11 | Gesture Handler swipe-to-cancel | ✅ Complete | Thẻ lịch nhận thao tác vuốt trái trên native; ngưỡng vuốt gọi cùng luồng xác nhận hủy như nút “Hủy lịch đặt”. |
 
 ### Acceptance Verification
 
@@ -41,7 +46,7 @@ VKU Room Booking là ứng dụng React Native đa nền tảng giúp sinh viên
 |---|:---:|---|
 | `npm run typecheck` | ✅ Passed | TypeScript strict mode không phát hiện lỗi kiểu dữ liệu. |
 | `npx expo install --check` | ✅ Passed | Các package tương thích với Expo SDK hiện tại. |
-| `npm run export:web` | ✅ Passed | Metro tạo production web bundle gồm 651 modules và 30 assets. |
+| `npm run export:web` | ✅ Passed | Metro tạo production web bundle gồm 1.130 modules và 30 assets sau khi thêm native module support. |
 | `npm run deploy` | ✅ Passed | Bản web được xuất bản thành công lên GitHub Pages. |
 | Live smoke test | ✅ Passed | Đã kiểm tra các luồng duyệt phòng, lọc, xem chi tiết, phát hiện trùng lịch và xem lịch đã đặt; không có console error hoặc failed request trong lần kiểm tra cuối. |
 
@@ -55,7 +60,9 @@ VKU Room Booking là ứng dụng React Native đa nền tảng giúp sinh viên
 * **Language:** TypeScript với strict mode.
 * **Navigation:** React Navigation 7, Native Stack và Bottom Tabs.
 * **Client State:** Zustand 5.
+* **Persistence:** AsyncStorage qua Zustand `persist` middleware.
 * **Server State:** TanStack Query 5 với nguồn dữ liệu mô phỏng.
+* **Motion and Gestures:** React Native Reanimated 4, React Native Gesture Handler.
 * **UI:** React Native core components, Expo Vector Icons và React Native Safe Area Context.
 * **Web/PWA:** React Native Web, Expo Web, Web App Manifest và GitHub Pages.
 
@@ -73,6 +80,8 @@ Mini-project2/
 ├── scripts/
 │   ├── generate-pwa-icons.mjs      # Sinh icon PWA 192/512 px
 │   └── prepare-web-dist.mjs        # Giữ runtime assets khi deploy Pages
+├── .github/workflows/
+│   └── android-apk-release.yml    # Build APK và tạo GitHub Release theo tag
 ├── src/
 │   ├── api/
 │   │   └── rooms.ts                # TanStack Query và simulated API
@@ -93,7 +102,7 @@ Mini-project2/
 │   │   ├── MyBookingsScreen.tsx    # Danh sách và hủy lịch
 │   │   └── ProfileScreen.tsx
 │   ├── store/
-│   │   └── useBookingStore.ts      # Filter, booking và conflict rules
+│   │   └── useBookingStore.ts      # Filter, persistent bookings và conflict rules
 │   ├── utils/
 │   │   └── date.ts                 # Chuẩn hóa và hiển thị ngày
 │   ├── theme.ts                    # Color tokens và border radius
@@ -116,11 +125,13 @@ flowchart LR
     I -->|Valid| J[bookRoom action]
     I -->|Conflict| K[Disabled slot / Alert]
     J --> H
+    H --> S[AsyncStorage persistence]
+    S --> H
     J --> L[BookingSuccessScreen]
     H --> M[MyBookingsScreen]
 ```
 
-Luồng dữ liệu phòng được tách khỏi trạng thái tương tác của người dùng. TanStack Query đảm nhiệm dữ liệu có tính chất server state, còn Zustand giữ bộ lọc và lịch đặt dùng chung giữa các màn hình. Việc tách này giúp component tập trung vào hiển thị và làm rõ nơi thực thi từng quy tắc nghiệp vụ.
+Luồng dữ liệu phòng được tách khỏi trạng thái tương tác của người dùng. TanStack Query đảm nhiệm dữ liệu có tính chất server state, còn Zustand giữ bộ lọc và lịch đặt dùng chung giữa các màn hình. Middleware `persist` chỉ lưu danh sách booking vào AsyncStorage; bộ lọc được giữ trong bộ nhớ phiên hiện tại. Việc tách này giúp component tập trung vào hiển thị và làm rõ nơi thực thi từng quy tắc nghiệp vụ.
 
 ### 3.4. Error Handling and Defensive Logic
 
@@ -129,6 +140,7 @@ Luồng dữ liệu phòng được tách khỏi trạng thái tương tác củ
 * Màn hình chi tiết xử lý trường hợp không tìm thấy phòng và ngăn xác nhận khi chưa chọn khung giờ.
 * Slot không khả dụng và slot trùng lịch bị disabled trên UI; `bookRoom()` tiếp tục kiểm tra xung đột tại store để tránh phụ thuộc hoàn toàn vào giao diện.
 * Navigation params, room model, time slot, booking và filter đều có TypeScript types riêng.
+* AsyncStorage giữ lịch đặt sau khi đóng/mở app; trên màn hình lịch, thao tác vuốt trái cũng gọi cùng hộp thoại xác nhận như nút hủy.
 
 ---
 
@@ -182,12 +194,18 @@ Các ảnh dưới đây được chụp ở viewport mobile `390 × 844` trực
 
 **Resolution:** Cấu hình `experiments.baseUrl` cho repository subpath, thêm bước `prepare-web-dist.mjs` để tạo `.gitignore` phù hợp trong web artifact và deploy với tùy chọn `--dotfiles --nojekyll`. Sau khi triển khai lại, toàn bộ font/runtime assets có mặt trên nhánh Pages và live smoke test không còn failed request.
 
-### 5.4. Current Limitations and Next Steps
+### 5.4. Persisting Bookings and Adding Native Motion
 
-* Dữ liệu phòng và lịch đặt hiện nằm trong bộ nhớ, chưa kết nối database hoặc REST API thật.
+**Challenge:** Lịch đặt chỉ tồn tại trong RAM nên mất khi app bị đóng. Ngoài ra, thao tác hủy chỉ qua nút, còn danh sách phòng chưa phản hồi bằng animation.
+
+**Resolution:** Zustand `persist` kết hợp AsyncStorage lưu riêng booking và khôi phục khi mở ứng dụng. FlatList dùng `isRefetching`/`refetch()` cho pull-to-refresh; room card dùng `FadeInDown` và layout spring của Reanimated; Gesture Handler nhận swipe-left và gọi lại luồng xác nhận hủy hiện có.
+
+### 5.5. Current Limitations and Next Steps
+
+* Danh sách phòng vẫn là dữ liệu mô phỏng; booking được lưu cục bộ trên thiết bị nhưng chưa đồng bộ qua database/API.
 * Chưa có đăng nhập, phân quyền quản trị viên và đồng bộ booking giữa nhiều thiết bị.
 * Chưa có bộ unit test/E2E tự động; phiên bản hiện tại được kiểm tra bằng TypeScript, Expo dependency check, production export và live smoke test.
-* Bước tiếp theo là tích hợp backend, persistence, xác thực người dùng, push notification nhắc lịch và EAS Build cho Android/iOS.
+* Bước tiếp theo là tích hợp backend, xác thực người dùng, push notification nhắc lịch và ký bản phát hành Android/iOS.
 
 ---
 

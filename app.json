@@ -2,7 +2,7 @@
   "expo": {
     "name": "VKU Room Booking",
     "slug": "vku-room-booking",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Ứng dụng đặt phòng học và phòng lab trong khuôn viên VKU.",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -18,6 +18,7 @@
     },
     "android": {
       "package": "vn.edu.vku.roombooking",
+      "versionCode": 2,
       "adaptiveIcon": {
         "backgroundColor": "#173F35"
       },

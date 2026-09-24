@@ -22,11 +22,11 @@ export function ProfileScreen() {
 
         <View style={styles.profileCard}>
           <View style={styles.avatar}>
-            <Text style={styles.avatarText}>SV</Text>
+            <Text style={styles.avatarText}>HV</Text>
           </View>
           <View style={styles.profileCopy}>
-            <Text style={styles.name}>Sinh viên VKU</Text>
-            <Text style={styles.studentId}>Mã SV: 24IT000</Text>
+            <Text style={styles.name}>Nguyễn Huy Vũ</Text>
+            <Text style={styles.studentId}>Mã SV: 23IT317</Text>
           </View>
           <View style={styles.verified}>
             <Ionicons color={colors.forest} name="checkmark-circle" size={18} />
@@ -82,7 +82,7 @@ export function ProfileScreen() {
           </View>
         </View>
 
-        <Text style={styles.version}>VKU Room Booking · Phiên bản 1.0.0</Text>
+        <Text style={styles.version}>VKU Room Booking · Phiên bản 1.1.0</Text>
       </ScrollView>
     </SafeAreaView>
   );

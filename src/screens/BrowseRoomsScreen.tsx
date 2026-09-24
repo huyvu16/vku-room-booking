@@ -27,7 +27,7 @@ type BrowseNavigation = NativeStackNavigationProp<RootStackParamList>;
 
 export function BrowseRoomsScreen() {
   const navigation = useNavigation<BrowseNavigation>();
-  const { data = [], isLoading, isError, refetch } = useRoomsQuery();
+  const { data = [], isLoading, isError, isRefetching, refetch } = useRoomsQuery();
   const { columns, horizontalPadding, gap, cardWidth } = useResponsiveLayout();
   const filters = useBookingStore((state) => state.filters);
   const setQuery = useBookingStore((state) => state.setQuery);
@@ -74,8 +74,8 @@ export function BrowseRoomsScreen() {
   );
 
   const renderRoom = useCallback(
-    ({ item }: { item: Room }) => (
-      <RoomCard onPress={openRoom} room={item} width={cardWidth} />
+    ({ item, index }: { item: Room; index: number }) => (
+      <RoomCard index={index} onPress={openRoom} room={item} width={cardWidth} />
     ),
     [cardWidth, openRoom],
   );
@@ -241,6 +241,8 @@ export function BrowseRoomsScreen() {
         numColumns={columns}
         removeClippedSubviews
         renderItem={renderRoom}
+        refreshing={isRefetching}
+        onRefresh={() => void refetch()}
         showsVerticalScrollIndicator={false}
         updateCellsBatchingPeriod={40}
         windowSize={5}

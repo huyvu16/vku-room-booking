@@ -1,6 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Alert, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { runOnJS } from 'react-native-worklets';
 
 import { useBookingStore } from '../store/useBookingStore';
 import { colors, radii } from '../theme';
@@ -8,8 +11,24 @@ import type { Booking } from '../types';
 import { formatBookingDate } from '../utils/date';
 
 function BookingCard({ booking, onCancel }: { booking: Booking; onCancel: (id: string) => void }) {
+  const translateX = useSharedValue(0);
+  const pan = Gesture.Pan()
+    .activeOffsetX(-12)
+    .failOffsetY([-12, 12])
+    .onUpdate((event) => {
+      translateX.value = Math.min(0, event.translationX);
+    })
+    .onEnd((event) => {
+      if (event.translationX < -120) runOnJS(onCancel)(booking.id);
+      translateX.value = withSpring(0);
+    });
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
   return (
-    <View style={styles.card}>
+    <GestureDetector gesture={pan}>
+      <Animated.View style={[styles.card, animatedStyle]}>
       <View style={styles.dateRail}>
         <Text style={styles.dateDay}>{booking.date.slice(-2)}</Text>
         <Text style={styles.dateMonth}>THÁNG {Number(booking.date.slice(5, 7))}</Text>
@@ -44,7 +63,8 @@ function BookingCard({ booking, onCancel }: { booking: Booking; onCancel: (id: s
           <Text style={styles.cancelText}>Hủy lịch đặt</Text>
         </Pressable>
       </View>
-    </View>
+      </Animated.View>
+    </GestureDetector>
   );
 }
 
@@ -83,7 +103,7 @@ export function MyBookingsScreen() {
             <Text style={styles.title}>Phòng đã đặt</Text>
             <Text style={styles.subtitle}>
               {bookings.length > 0
-                ? `${bookings.length} lịch sắp tới · Luôn đến trước 5 phút nhé.`
+                ? `${bookings.length} lịch sắp tới · Vuốt thẻ sang trái hoặc chạm Hủy lịch đặt để hủy.`
                 : 'Mọi kế hoạch học tập trong một nơi.'}
             </Text>
           </View>

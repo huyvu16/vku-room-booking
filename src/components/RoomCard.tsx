@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { memo, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeInDown, LinearTransition } from 'react-native-reanimated';
 
 import { colors, radii } from '../theme';
 import type { Room } from '../types';
@@ -8,6 +9,7 @@ import type { Room } from '../types';
 interface RoomCardProps {
   room: Room;
   width: number;
+  index: number;
   onPress: (roomId: string) => void;
 }
 
@@ -17,18 +19,23 @@ const statusCopy = {
   occupied: { label: 'Đã kín', color: colors.red, background: colors.redSoft },
 } as const;
 
-function RoomCardComponent({ room, width, onPress }: RoomCardProps) {
+function RoomCardComponent({ room, width, index, onPress }: RoomCardProps) {
   const [imageFailed, setImageFailed] = useState(false);
   const status = statusCopy[room.status];
 
   return (
-    <Pressable
-      accessibilityHint="Mở chi tiết và chọn lịch đặt phòng"
-      accessibilityLabel={`${room.name}, ${room.capacity} chỗ, ${status.label}`}
-      accessibilityRole="button"
-      onPress={() => onPress(room.id)}
-      style={({ pressed }) => [styles.card, { width }, pressed && styles.cardPressed]}
+    <Animated.View
+      entering={FadeInDown.delay(Math.min(index, 8) * 45).springify()}
+      layout={LinearTransition.springify().damping(18)}
+      style={{ width }}
     >
+      <Pressable
+        accessibilityHint="Mở chi tiết và chọn lịch đặt phòng"
+        accessibilityLabel={`${room.name}, ${room.capacity} chỗ, ${status.label}`}
+        accessibilityRole="button"
+        onPress={() => onPress(room.id)}
+        style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
+      >
       <View style={styles.imageWrap}>
         {imageFailed ? (
           <View style={styles.imageFallback}>
@@ -87,7 +94,8 @@ function RoomCardComponent({ room, width, onPress }: RoomCardProps) {
           </View>
         </View>
       </View>
-    </Pressable>
+      </Pressable>
+    </Animated.View>
   );
 }
 
@@ -95,6 +103,7 @@ export const RoomCard = memo(RoomCardComponent);
 
 const styles = StyleSheet.create({
   card: {
+    width: '100%',
     height: 318,
     borderRadius: radii.lg,
     backgroundColor: colors.white,

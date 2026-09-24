@@ -13,6 +13,9 @@
 - `FlatList` responsive với 24 phòng mẫu và thiết lập tối ưu render.
 - Chọn ngày, khung giờ và ngăn đặt trùng lịch.
 - Luồng xác nhận, danh sách lịch đã đặt và hủy lịch.
+- Lưu lịch đặt trên thiết bị, giữ booking qua các lần mở app.
+- Kéo xuống để tải lại danh sách; room card có animation vào màn hình.
+- Vuốt thẻ lịch đã đặt sang trái để bắt đầu thao tác hủy.
 - Bottom Tabs: Khám phá, Lịch của tôi và Tài khoản.
 - Safe area, giao diện tablet và xoay màn hình.
 - Bản web PWA có thể thêm vào màn hình chính trên mobile.
@@ -22,9 +25,16 @@
 - React Native 0.86 + Expo SDK 57 (Managed Workflow)
 - React 19 và TypeScript strict mode
 - React Navigation 7 (Native Stack + Bottom Tabs)
-- Zustand cho client state
+- Zustand + AsyncStorage cho client state và lịch đặt lưu bền vững
 - TanStack Query cho server state mô phỏng
+- Reanimated + Gesture Handler cho animation và vuốt hủy lịch
 - Expo Web/React Native Web và GitHub Pages
+
+## Tải APK Android
+
+Tải APK mới nhất từ [GitHub Releases](https://github.com/huyvu16/vku-room-booking/releases/latest). Trên Android, mở file APK đã tải và cho phép cài ứng dụng từ trình duyệt hoặc trình quản lý tệp nếu thiết bị yêu cầu.
+
+Mỗi tag `v*` tạo một APK cài thử (debug build) và đăng lên GitHub Releases bằng GitHub Actions. Để tạo APK mới, đẩy tag phiên bản, ví dụ `v1.1.0`.
 
 ## Chạy ứng dụng mobile
 
