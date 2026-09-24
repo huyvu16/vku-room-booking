@@ -82,7 +82,7 @@ export function ProfileScreen() {
           </View>
         </View>
 
-        <Text style={styles.version}>VKU Room Booking · Phiên bản 1.1.1</Text>
+        <Text style={styles.version}>VKU Room Booking · Phiên bản 1.1.2</Text>
       </ScrollView>
     </SafeAreaView>
   );
