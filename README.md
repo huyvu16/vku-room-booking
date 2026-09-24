@@ -32,9 +32,9 @@
 
 ## Tải APK Android
 
-Tải APK mới nhất từ [GitHub Releases](https://github.com/huyvu16/vku-room-booking/releases/latest). Trên Android, mở file APK đã tải và cho phép cài ứng dụng từ trình duyệt hoặc trình quản lý tệp nếu thiết bị yêu cầu.
+Tải APK độc lập mới nhất từ [GitHub Releases](https://github.com/huyvu16/vku-room-booking/releases/latest). Trên Android, mở file APK đã tải và cho phép cài ứng dụng từ trình duyệt hoặc trình quản lý tệp nếu thiết bị yêu cầu. APK được ký bằng khóa phát triển để cài đặt và đánh giá project, không dùng để phát hành chính thức trên Play Store.
 
-Mỗi tag `v*` tạo một APK cài thử (debug build) và đăng lên GitHub Releases bằng GitHub Actions. Để tạo APK mới, đẩy tag phiên bản, ví dụ `v1.1.0`.
+Mỗi tag `v*` tạo một APK độc lập (release variant, ký bằng khóa phát triển) và đăng lên GitHub Releases bằng GitHub Actions. Để tạo APK mới, đẩy tag phiên bản, ví dụ `v1.1.1`.
 
 ## Chạy ứng dụng mobile
 

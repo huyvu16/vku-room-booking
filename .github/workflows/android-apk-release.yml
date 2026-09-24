@@ -12,6 +12,7 @@ jobs:
   build-apk:
     name: Build and publish Android APK
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -27,22 +28,23 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+          cache: gradle
 
       - name: Install dependencies
         run: npm ci
 
       - name: Generate Android project
-        run: npx expo prebuild --platform android --no-install --non-interactive
+        run: npx expo prebuild --platform android --no-install
 
-      - name: Build installable APK
-        run: ./gradlew assembleDebug
+      - name: Build standalone installable APK
+        run: ./gradlew assembleRelease
         working-directory: android
 
       - name: Upload APK build artifact
         uses: actions/upload-artifact@v4
         with:
           name: vku-room-booking-${{ github.ref_name }}.apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
 
       - name: Publish APK to GitHub Releases
@@ -50,6 +52,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: >-
           gh release create "$GITHUB_REF_NAME"
-          android/app/build/outputs/apk/debug/app-debug.apk#vku-room-booking-${GITHUB_REF_NAME}.apk
+          android/app/build/outputs/apk/release/app-release.apk#vku-room-booking-${GITHUB_REF_NAME}.apk
           --title "VKU Room Booking $GITHUB_REF_NAME"
-          --notes "Installable Android debug APK for VKU Room Booking. Download the APK asset and install it on an Android device."
+          --notes "Standalone Android APK for VKU Room Booking, signed with a development key for project review and testing. Download the APK asset and install it on an Android device."
